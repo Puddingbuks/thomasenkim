@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thomas &amp; Kim · 30 juli 2027</title>
+<meta name="description" content="Thomas &amp; Kim gaan trouwen op vrijdag 30 juli 2027 bij On The Rock in Aalsmeer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F7F1E5; font-family: 'EB Garamond', serif; color: #4A4234; overflow-x: hidden; }
+  section[id] { scroll-margin-top: 84px; }
+
+  @keyframes tkfloat { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-7px); } }
+  @keyframes tkfade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; gap: 38px; padding: 16px 24px; background: rgba(247,241,229,0.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(166,148,114,0.22); flex-wrap: wrap; }
+  nav a { font-family: 'EB Garamond', serif; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: #6B5F4B; text-decoration: none; }
+  nav a.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #4A4234; text-transform: none; letter-spacing: 0.04em; padding: 0 8px; }
+  nav a.nav-rsvp { color: #FCF8F0; background: #7E866B; padding: 9px 18px; border-radius: 100px; }
+  nav a:hover { opacity: 0.75; }
+
+  /* Buttons / inputs shared */
+  input, select, textarea { font-family: 'EB Garamond', serif; font-size: 17px; color: #4A4234; background: #F7F1E5; border: 1.5px solid rgba(166,148,114,0.45); border-radius: 10px; padding: 13px 16px; outline: none; width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: #7E866B; background: #fffdf8; }
+  select { appearance: none; -webkit-appearance: none; }
+  textarea { resize: vertical; line-height: 1.6; }
+
+  .label { display: block; font-family: 'EB Garamond', serif; text-transform: uppercase; letter-spacing: 0.18em; font-size: 12.5px; color: #6B5F4B; margin-bottom: 9px; }
+  .err { color: #b5604b; font-size: 14.5px; margin: 7px 0 0; display: none; }
+  .err.visible { display: block; }
+
+  /* Attendance buttons */
+  .att-btn { display: flex; flex-direction: column; gap: 3px; align-items: center; text-align: center; cursor: pointer; padding: 18px 14px; border-radius: 12px; transition: all .2s ease; background: #F7F1E5; border: 1.5px solid rgba(166,148,114,0.45); color: #4A4234; }
+  .att-btn.active { background: #7E866B; border-color: #7E866B; color: #FCF8F0; box-shadow: 0 8px 20px rgba(126,134,107,0.28); }
+  .att-btn span:first-child { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600; }
+  .att-btn span:last-child { font-size: 14.5px; opacity: 0.8; }
+
+  /* Pill buttons */
+  .pill-btn { font-family: 'EB Garamond', serif; font-size: 16px; cursor: pointer; padding: 10px 22px; border-radius: 100px; transition: all .2s ease; background: #F7F1E5; border: 1.5px solid rgba(166,148,114,0.45); color: #6B5F4B; }
+  .pill-btn.active { background: #7E866B; border-color: #7E866B; color: #FCF8F0; }
+
+  /* Submit button */
+  .submit-btn { width: 100%; font-family: 'EB Garamond', serif; text-transform: uppercase; letter-spacing: 0.22em; font-size: 14px; color: #FCF8F0; background: #7E866B; border: none; border-radius: 100px; padding: 17px; cursor: pointer; box-shadow: 0 12px 28px rgba(126,134,107,0.3); transition: background .2s; }
+  .submit-btn:hover { background: #6c745b; }
+
+  /* FAQ */
+  .faq-item { background: #FCF8F0; border: 1px solid rgba(166,148,114,0.3); border-radius: 12px; overflow: hidden; }
+  .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; background: none; border: none; cursor: pointer; padding: 20px 24px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #4A4234; }
+  .faq-answer { padding: 0 24px 22px; display: none; }
+  .faq-answer.open { display: block; }
+  .faq-answer p { font-size: 16.5px; line-height: 1.75; color: #6B5F4B; margin: 0; }
+
+  /* Image placeholders */
+  .img-slot { width: 100%; height: 100%; background: rgba(166,148,114,0.18); display: flex; align-items: center; justify-content: center; color: #a6906a; font-size: 14px; font-family: 'EB Garamond', serif; text-align: center; padding: 20px; }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    nav { gap: 16px; padding: 12px 16px; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .att-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <a href="#programma">Programma</a>
+  <a href="#diner">Diner</a>
+  <a href="#locatie">Locatie</a>
+  <a href="#top" class="nav-logo">T&nbsp;<span style="font-style:italic;color:#7E866B;">&amp;</span>&nbsp;K</a>
+  <a href="#dresscode">Dresscode</a>
+  <a href="#rsvp" class="nav-rsvp">RSVP</a>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header id="top" style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:130px 24px 70px;">
+  <!-- Left sprig -->
+  <svg viewBox="0 0 100 180" width="78" height="140" style="position:absolute;top:92px;left:5%;opacity:0.5;transform:rotate(-12deg);" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#878b6e" stroke-width="1.2" stroke-linecap="round">
+      <path d="M50 176 C50 130 50 80 50 14"/>
+      <ellipse cx="34" cy="150" rx="13" ry="7" transform="rotate(-28 34 150)"/>
+      <ellipse cx="32" cy="120" rx="14" ry="7.5" transform="rotate(-25 32 120)"/>
+      <ellipse cx="33" cy="90" rx="13" ry="7" transform="rotate(-22 33 90)"/>
+      <ellipse cx="36" cy="62" rx="11" ry="6" transform="rotate(-20 36 62)"/>
+      <ellipse cx="40" cy="38" rx="9" ry="5" transform="rotate(-16 40 38)"/>
+      <ellipse cx="66" cy="150" rx="13" ry="7" transform="rotate(28 66 150)"/>
+      <ellipse cx="68" cy="120" rx="14" ry="7.5" transform="rotate(25 68 120)"/>
+      <ellipse cx="67" cy="90" rx="13" ry="7" transform="rotate(22 67 90)"/>
+      <ellipse cx="64" cy="62" rx="11" ry="6" transform="rotate(20 64 62)"/>
+      <ellipse cx="60" cy="38" rx="9" ry="5" transform="rotate(16 60 38)"/>
+      <ellipse cx="50" cy="18" rx="6" ry="9"/>
+    </g>
+  </svg>
+  <!-- Right sprig -->
+  <svg viewBox="0 0 100 180" width="78" height="140" style="position:absolute;top:92px;right:5%;opacity:0.5;transform:rotate(12deg) scaleX(-1);" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#878b6e" stroke-width="1.2" stroke-linecap="round">
+      <path d="M50 176 C50 130 50 80 50 14"/>
+      <ellipse cx="34" cy="150" rx="13" ry="7" transform="rotate(-28 34 150)"/>
+      <ellipse cx="32" cy="120" rx="14" ry="7.5" transform="rotate(-25 32 120)"/>
+      <ellipse cx="33" cy="90" rx="13" ry="7" transform="rotate(-22 33 90)"/>
+      <ellipse cx="36" cy="62" rx="11" ry="6" transform="rotate(-20 36 62)"/>
+      <ellipse cx="40" cy="38" rx="9" ry="5" transform="rotate(-16 40 38)"/>
+      <ellipse cx="66" cy="150" rx="13" ry="7" transform="rotate(28 66 150)"/>
+      <ellipse cx="68" cy="120" rx="14" ry="7.5" transform="rotate(25 68 120)"/>
+      <ellipse cx="67" cy="90" rx="13" ry="7" transform="rotate(22 67 90)"/>
+      <ellipse cx="64" cy="62" rx="11" ry="6" transform="rotate(20 64 62)"/>
+      <ellipse cx="60" cy="38" rx="9" ry="5" transform="rotate(16 60 38)"/>
+      <ellipse cx="50" cy="18" rx="6" ry="9"/>
+    </g>
+  </svg>
+
+  <p style="font-family:'EB Garamond',serif;text-transform:uppercase;letter-spacing:0.42em;font-size:14px;color:#8a7d63;margin:0 0 6px;">Wij gaan trouwen</p>
+  <h1 style="font-family:'Pinyon Script',cursive;font-weight:400;font-size:clamp(52px,9.4vw,112px);line-height:1.04;color:#4A4234;margin:10px 0 6px;white-space:nowrap;">Thomas <span style="color:#7E866B;">&amp;</span> Kim</h1>
+
+  <!-- Divider -->
+  <svg viewBox="0 0 360 48" width="300" height="40" style="margin:10px 0 18px;opacity:0.85;" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#a6906a" stroke-width="1.1" stroke-linecap="round">
+      <path d="M20 24 H132"/><path d="M228 24 H340"/>
+      <path d="M132 24 C120 16 112 16 104 12"/><path d="M132 24 C120 32 112 32 104 36"/>
+      <path d="M228 24 C240 16 248 16 256 12"/><path d="M228 24 C240 32 248 32 256 36"/>
+    </g>
+    <g stroke="#7E866B" stroke-width="1.1" fill="none">
+      <ellipse cx="180" cy="24" rx="6" ry="13"/>
+      <ellipse cx="180" cy="24" rx="13" ry="6"/>
+      <ellipse cx="180" cy="24" rx="11.5" ry="11.5" transform="rotate(45 180 24)" stroke-dasharray="0.1 30" stroke-linecap="round"/>
+    </g>
+    <circle cx="180" cy="24" r="3.4" fill="#b08a52"/>
+  </svg>
+
+  <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.4vw,30px);letter-spacing:0.06em;color:#5f5645;margin:0;">Vrijdag 30 juli 2027</p>
+  <p style="font-size:16px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7d63;margin:8px 0 0;">On The Rock &middot; Aalsmeer</p>
+  <p style="font-size:14px;letter-spacing:0.2em;text-transform:uppercase;color:#a6906a;margin:6px 0 0;">14:30 &ndash; 01:00</p>
+
+  <a href="#rsvp" style="margin-top:38px;font-family:'EB Garamond',serif;text-transform:uppercase;letter-spacing:0.24em;font-size:13px;color:#FCF8F0;text-decoration:none;background:#7E866B;padding:15px 36px;border-radius:100px;box-shadow:0 10px 26px rgba(126,134,107,0.28);transition:background .2s;" onmouseover="this.style.background='#6c745b'" onmouseout="this.style.background='#7E866B'">Laat ons weten of je erbij bent</a>
+
+  <div style="position:absolute;bottom:28px;left:50%;animation:tkfloat 3.4s ease-in-out infinite;opacity:0.55;">
+    <svg width="22" height="34" viewBox="0 0 22 34" fill="none"><rect x="1" y="1" width="20" height="32" rx="10" stroke="#8a7d63" stroke-width="1.2"/><circle cx="11" cy="9" r="2.4" fill="#8a7d63"/></svg>
+  </div>
+</header>
+
+<!-- ===================== WELKOM ===================== -->
+<section style="padding:96px 24px 40px;text-align:center;">
+  <div style="max-width:720px;margin:0 auto;">
+    <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 18px;">Welkom</p>
+    <p style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(24px,3.6vw,34px);line-height:1.5;color:#4A4234;margin:0;">Na een mooie reis samen geven wij elkaar het jawoord — en we zouden niets liever willen dan dat je erbij bent. Op deze pagina vind je alles over onze dag, en kun je laten weten of je komt.</p>
+  </div>
+</section>
+
+<!-- ===================== ONS VERHAAL ===================== -->
+<section id="verhaal" style="padding:80px 24px 100px;">
+  <div style="max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;" class="two-col">
+    <div style="display:flex;justify-content:center;">
+      <div style="width:100%;max-width:360px;aspect-ratio:4/5;border-radius:50% 50% 10px 10px;overflow:hidden;box-shadow:0 22px 50px rgba(74,66,52,0.16);border:1px solid rgba(166,148,114,0.4);">
+        <div class="img-slot">Sleep hier een foto van jullie samen</div>
+      </div>
+    </div>
+    <div>
+      <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">Ons verhaal</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4.4vw,48px);line-height:1.06;color:#4A4234;margin:0 0 22px;">Hoe het begon</h2>
+      <p style="font-size:18px;line-height:1.85;color:#5f5645;margin:0 0 16px;">Het begon met een match op Tinder. Een eerste gesprek dat maar niet wilde ophouden, een eerste date, en die ene kus die alles veranderde.</p>
+      <p style="font-family:'Pinyon Script',cursive;font-size:clamp(30px,4vw,42px);color:#7E866B;margin:4px 0 16px;line-height:1.2;">It started with a kiss</p>
+      <p style="font-size:18px;line-height:1.85;color:#5f5645;margin:0;">Sinds 30 juli 2019 onafscheidelijk — en precies acht jaar later, op 30 juli 2027, geven we elkaar het jawoord. We kijken er enorm naar uit dit moment te vieren met de mensen die ons het meest dierbaar zijn.</p>
+      <p style="font-family:'Pinyon Script',cursive;font-size:40px;color:#7E866B;margin:22px 0 0;">Thomas &amp; Kim</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROGRAMMA ===================== -->
+<section id="programma" style="padding:100px 24px;background:#EFE6D6;position:relative;">
+  <div style="max-width:720px;margin:0 auto;text-align:center;">
+    <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">De dag</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4.6vw,50px);color:#4A4234;margin:0 0 12px;">Programma</h2>
+    <p style="font-size:17px;line-height:1.7;color:#6B5F4B;margin:0 0 54px;">Een dag om nooit te vergeten, van het eerste glas tot het laatste lied.</p>
+  </div>
+  <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;">
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">14:30</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Gasten arriveren</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">Welkom met een welkomstdrankje.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">14:55</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Aankomst bruidspaar</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">Thomas &amp; Kim arriveren over de weg of per boot.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">15:00</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Ceremonie</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">Buiten op het schelpenpad — of bij regen in de fortzaal.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">15:45</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Toost &amp; champagnetoren</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">Samen proosten op het pas getrouwde paar.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">15:45</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Receptie</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">Hapjes, drankjes en alle tijd voor felicitaties.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">17:30</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Walking dinner</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">Een diner in zes gangen met 60 gasten.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">20:00</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Avondgasten arriveren</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">De avondgasten sluiten aan voor het feest.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">20:30</div>
+      <div style="position:relative;padding:0 0 34px 30px;border-left:1.5px solid rgba(126,134,107,0.4);">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Feest begint</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">De dansvloer gaat open — met 110 gasten vieren we door.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:96px 1fr;gap:26px;align-items:start;padding:0 0 6px;">
+      <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#7E866B;line-height:1.3;">01:00</div>
+      <div style="position:relative;padding:0 0 0 30px;">
+        <span style="position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:#EFE6D6;border:2px solid #7E866B;"></span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;color:#4A4234;margin:0 0 4px;">Einde feest</h3>
+        <p style="font-size:16.5px;line-height:1.65;color:#6B5F4B;margin:0;">We sluiten samen een onvergetelijke dag af.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DINER ===================== -->
+<section id="diner" style="padding:100px 24px;">
+  <div style="max-width:640px;margin:0 auto;text-align:center;">
+    <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">Aan tafel</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4.6vw,50px);color:#4A4234;margin:0 0 12px;">Het walking dinner</h2>
+    <p style="font-size:17px;line-height:1.7;color:#6B5F4B;margin:0 0 48px;">Een culinaire reis in zes gangen, geserveerd terwijl je geniet van de avond.</p>
+  </div>
+  <div style="max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:4px;">
+    <div style="display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(166,148,114,0.28);">
+      <span style="font-family:'Pinyon Script',cursive;font-size:34px;color:#7E866B;line-height:1;">I</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.4;color:#4A4234;margin:0;">Bawykow zalm, blini, Avyuga kaviaar, cr&egrave;me fra&icirc;che</p>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(166,148,114,0.28);">
+      <span style="font-family:'Pinyon Script',cursive;font-size:34px;color:#7E866B;line-height:1;">II</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.4;color:#4A4234;margin:0;">Carpaccio, Parmezaan, truffelmayonaise</p>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(166,148,114,0.28);">
+      <span style="font-family:'Pinyon Script',cursive;font-size:34px;color:#7E866B;line-height:1;">III</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.4;color:#4A4234;margin:0;">Seizoenssoep <span style="font-style:italic;color:#7E866B;">(v)</span></p>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(166,148,114,0.28);">
+      <span style="font-family:'Pinyon Script',cursive;font-size:34px;color:#7E866B;line-height:1;">IV</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.4;color:#4A4234;margin:0;">Filet van zeebaars, hollandaisesaus</p>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(166,148,114,0.28);">
+      <span style="font-family:'Pinyon Script',cursive;font-size:34px;color:#7E866B;line-height:1;">V</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.4;color:#4A4234;margin:0;">Parelhoen, Pasta Negra ham, gevogeltejus</p>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline;padding:18px 0;">
+      <span style="font-family:'Pinyon Script',cursive;font-size:34px;color:#7E866B;line-height:1;">VI</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.4;color:#4A4234;margin:0;">Citroen-meringuetaart</p>
+    </div>
+    <p style="font-size:14.5px;color:#8a7d63;text-align:center;margin:22px 0 0;font-style:italic;">Dieetwensen en allergie&euml;n kun je doorgeven bij je RSVP.</p>
+  </div>
+</section>
+
+<!-- ===================== LOCATIE ===================== -->
+<section id="locatie" style="padding:100px 24px;background:#EFE6D6;">
+  <div style="max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;" class="two-col">
+    <div>
+      <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">Waar</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4.4vw,48px);color:#4A4234;margin:0 0 20px;">On The Rock</h2>
+      <p style="font-size:18px;line-height:1.85;color:#5f5645;margin:0 0 26px;">Een bijzondere plek aan het water in Aalsmeer. We vieren onze dag verspreid over het schelpenpad, het linkerterras, de fortzaal en de kas &mdash; van ceremonie tot het laatste lied.</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7E866B" stroke-width="1.5" style="margin-top:2px;flex-shrink:0;"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <p style="font-size:17px;line-height:1.6;color:#5f5645;margin:0;">On The Rock &middot; Aalsmeer, Nederland</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7E866B" stroke-width="1.5" style="margin-top:2px;flex-shrink:0;"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0Z"/></svg>
+          <p style="font-size:17px;line-height:1.6;color:#5f5645;margin:0;">Contactpersoon op locatie: Merel Meijer</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7E866B" stroke-width="1.5" style="margin-top:2px;flex-shrink:0;"><path d="M3 18c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0 3-1 4.5 0"/><path d="M5 14V6a2 2 0 0 1 2-2h6l5 5v5"/></svg>
+          <p style="font-size:17px;line-height:1.6;color:#5f5645;margin:0;">Het bruidspaar arriveert over de weg of per boot &mdash; houd het water in de gaten.</p>
+        </div>
+      </div>
+      <a href="https://maps.google.com/?q=On+The+Rock+Aalsmeer" target="_blank" rel="noopener" style="display:inline-block;margin-top:28px;font-family:'EB Garamond',serif;text-transform:uppercase;letter-spacing:0.2em;font-size:12.5px;color:#4A4234;text-decoration:none;border:1.5px solid #a6906a;padding:12px 26px;border-radius:100px;transition:all .2s;" onmouseover="this.style.background='#a6906a';this.style.color='#FCF8F0'" onmouseout="this.style.background='';this.style.color='#4A4234'">Bekijk de route</a>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <div style="width:100%;aspect-ratio:1/1;max-width:400px;border-radius:14px;overflow:hidden;box-shadow:0 22px 50px rgba(74,66,52,0.16);border:1px solid rgba(166,148,114,0.4);">
+        <div class="img-slot">Sleep hier een foto van de locatie</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DRESSCODE ===================== -->
+<section id="dresscode" style="padding:96px 24px;text-align:center;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">Goed om te weten</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4.6vw,50px);color:#4A4234;margin:0 0 50px;">Praktische zaken</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;" class="three-col">
+      <div style="background:#FCF8F0;border:1px solid rgba(166,148,114,0.3);border-radius:14px;padding:40px 28px;text-align:center;box-shadow:0 8px 24px rgba(74,66,52,0.05);">
+        <div style="display:flex;justify-content:center;margin-bottom:18px;">
+          <svg width="100" height="40" viewBox="0 0 360 48" fill="none"><g stroke="#a6906a" stroke-width="1.1" stroke-linecap="round"><path d="M60 24 H150"/><path d="M210 24 H300"/></g><g stroke="#7E866B" stroke-width="1.1" fill="none"><ellipse cx="180" cy="24" rx="5" ry="11"/><ellipse cx="180" cy="24" rx="11" ry="5"/></g><circle cx="180" cy="24" r="3" fill="#b08a52"/></svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;color:#4A4234;margin:0 0 12px;">Dresscode</h3>
+        <p style="font-size:16.5px;line-height:1.7;color:#6B5F4B;margin:0;">Stijlvol &amp; chic. Tinten beige, zand en groen worden gewaardeerd — laat fel wit thuis.</p>
+      </div>
+      <div style="background:#FCF8F0;border:1px solid rgba(166,148,114,0.3);border-radius:14px;padding:40px 28px;text-align:center;box-shadow:0 8px 24px rgba(74,66,52,0.05);">
+        <div style="display:flex;justify-content:center;margin-bottom:18px;">
+          <svg width="100" height="40" viewBox="0 0 360 48" fill="none"><g stroke="#a6906a" stroke-width="1.1" stroke-linecap="round"><path d="M60 24 H150"/><path d="M210 24 H300"/></g><g stroke="#7E866B" stroke-width="1.1" fill="none"><ellipse cx="180" cy="24" rx="5" ry="11"/><ellipse cx="180" cy="24" rx="11" ry="5"/></g><circle cx="180" cy="24" r="3" fill="#b08a52"/></svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;color:#4A4234;margin:0 0 12px;">Muziek</h3>
+        <p style="font-size:16.5px;line-height:1.7;color:#6B5F4B;margin:0;">Tijdens de borrel en het diner klinkt zachte achtergrondmuziek met saxofoon; daarna neemt de DJ het over tot diep in de nacht.</p>
+      </div>
+      <div style="background:#FCF8F0;border:1px solid rgba(166,148,114,0.3);border-radius:14px;padding:40px 28px;text-align:center;box-shadow:0 8px 24px rgba(74,66,52,0.05);">
+        <div style="display:flex;justify-content:center;margin-bottom:18px;">
+          <svg width="100" height="40" viewBox="0 0 360 48" fill="none"><g stroke="#a6906a" stroke-width="1.1" stroke-linecap="round"><path d="M60 24 H150"/><path d="M210 24 H300"/></g><g stroke="#7E866B" stroke-width="1.1" fill="none"><ellipse cx="180" cy="24" rx="5" ry="11"/><ellipse cx="180" cy="24" rx="11" ry="5"/></g><circle cx="180" cy="24" r="3" fill="#b08a52"/></svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;color:#4A4234;margin:0 0 12px;">Cadeautip</h3>
+        <p style="font-size:16.5px;line-height:1.7;color:#6B5F4B;margin:0;">Jullie aanwezigheid is het mooiste cadeau. Wie ons toch wil verrassen: een bijdrage aan onze huwelijksreis maakt ons heel blij.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RSVP ===================== -->
+<section id="rsvp" style="padding:110px 24px;position:relative;">
+  <svg viewBox="0 0 360 48" width="280" height="38" style="display:block;margin:0 auto 22px;opacity:0.85;" fill="none">
+    <g stroke="#a6906a" stroke-width="1.1" stroke-linecap="round"><path d="M20 24 H132"/><path d="M228 24 H340"/><path d="M132 24 C120 16 112 16 104 12"/><path d="M132 24 C120 32 112 32 104 36"/><path d="M228 24 C240 16 248 16 256 12"/><path d="M228 24 C240 32 248 32 256 36"/></g>
+    <g stroke="#7E866B" stroke-width="1.1" fill="none"><ellipse cx="180" cy="24" rx="6" ry="13"/><ellipse cx="180" cy="24" rx="13" ry="6"/></g>
+    <circle cx="180" cy="24" r="3.4" fill="#b08a52"/>
+  </svg>
+  <div style="text-align:center;max-width:640px;margin:0 auto 46px;">
+    <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">Geef je gehoor</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,56px);color:#4A4234;margin:0 0 14px;">RSVP</h2>
+    <p style="font-size:18px;line-height:1.7;color:#6B5F4B;margin:0;">We horen graag of je erbij bent. Laat het ons weten <strong style="color:#4A4234;font-weight:600;">v&oacute;&oacute;r 1 mei 2027</strong>.</p>
+  </div>
+
+  <!-- FORM -->
+  <form id="rsvp-form" style="max-width:600px;margin:0 auto;background:#FCF8F0;border:1px solid rgba(166,148,114,0.35);border-radius:18px;padding:clamp(28px,5vw,48px);box-shadow:0 24px 60px rgba(74,66,52,0.1);">
+
+    <div style="margin-bottom:24px;">
+      <label class="label">Naam <span style="color:#b08a52;">*</span></label>
+      <input type="text" id="f-naam" placeholder="Voor- en achternaam">
+      <p class="err" id="err-naam">Vul je naam in zodat we weten wie er komt.</p>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <label class="label">E-mailadres <span style="color:#b08a52;">*</span></label>
+      <input type="email" id="f-email" placeholder="jij@voorbeeld.nl">
+      <p class="err" id="err-email">Vul je e-mailadres in.</p>
+    </div>
+
+    <div style="margin-bottom:26px;">
+      <label class="label">Ben je erbij? <span style="color:#b08a52;">*</span></label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" class="att-grid">
+        <button type="button" class="att-btn" id="btn-ja" onclick="setAtt('ja')">
+          <span>Ja, ik kom graag</span>
+          <span>Ik kijk ernaar uit</span>
+        </button>
+        <button type="button" class="att-btn" id="btn-nee" onclick="setAtt('nee')">
+          <span>Helaas niet</span>
+          <span>Ik kan er niet bij zijn</span>
+        </button>
+      </div>
+      <p class="err" id="err-att">Laat ons weten of je erbij bent.</p>
+    </div>
+
+    <!-- Extra velden bij JA -->
+    <div id="ja-velden" style="display:none;border-top:1px solid rgba(166,148,114,0.3);padding-top:26px;margin-top:4px;">
+
+      <div style="margin-bottom:24px;">
+        <label class="label">Met hoeveel personen kom je?</label>
+        <select id="f-personen">
+          <option value="1">1 persoon (alleen ik)</option>
+          <option value="2" selected>2 personen (ik + partner)</option>
+          <option value="3">3 personen</option>
+          <option value="4">4 personen</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <label class="label">Bij welke onderdelen ben je?</label>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <button type="button" class="pill-btn active" id="pill-ceremonie" onclick="togglePill('ceremonie')">Ceremonie</button>
+          <button type="button" class="pill-btn active" id="pill-diner" onclick="togglePill('diner')">Diner</button>
+          <button type="button" class="pill-btn active" id="pill-feest" onclick="togglePill('feest')">Avondfeest</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <label class="label">Dieetwensen of allergie&euml;n</label>
+        <input type="text" id="f-dieet" placeholder="Bijv. vegetarisch, notenallergie&hellip;">
+      </div>
+
+      <div style="margin-bottom:4px;">
+        <label class="label">Welk lied mag niet ontbreken?</label>
+        <input type="text" id="f-lied" placeholder="Jouw verzoeknummer voor de dansvloer">
+      </div>
+    </div>
+
+    <div style="margin:26px 0 28px;">
+      <label class="label">Een bericht aan ons (optioneel)</label>
+      <textarea id="f-bericht" rows="3" placeholder="Een lief woordje, een wens of een vraag&hellip;"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Verstuur mijn RSVP</button>
+  </form>
+
+  <!-- BEVESTIGING -->
+  <div id="rsvp-bevestiging" style="display:none;max-width:600px;margin:0 auto;background:#FCF8F0;border:1px solid rgba(166,148,114,0.35);border-radius:18px;padding:clamp(34px,6vw,56px);text-align:center;box-shadow:0 24px 60px rgba(74,66,52,0.1);animation:tkfade 0.5s ease;">
+    <svg viewBox="0 0 100 130" width="64" height="84" style="margin:0 auto 6px;display:block;" fill="none">
+      <g stroke="#7E866B" stroke-width="1.4" stroke-linecap="round">
+        <path d="M50 124 C50 92 50 60 50 30"/>
+        <ellipse cx="36" cy="104" rx="11" ry="6" transform="rotate(-28 36 104)"/>
+        <ellipse cx="64" cy="104" rx="11" ry="6" transform="rotate(28 64 104)"/>
+        <ellipse cx="35" cy="78" rx="12" ry="6.5" transform="rotate(-24 35 78)"/>
+        <ellipse cx="65" cy="78" rx="12" ry="6.5" transform="rotate(24 65 78)"/>
+        <ellipse cx="38" cy="54" rx="10" ry="5.5" transform="rotate(-20 38 54)"/>
+        <ellipse cx="62" cy="54" rx="10" ry="5.5" transform="rotate(20 62 54)"/>
+      </g>
+      <g stroke="#7E866B" stroke-width="1.3" fill="none"><ellipse cx="50" cy="20" rx="7" ry="15"/><ellipse cx="50" cy="20" rx="15" ry="7"/></g>
+      <circle cx="50" cy="20" r="4" fill="#b08a52"/>
+    </svg>
+    <h3 id="dank-titel" style="font-family:'Pinyon Script',cursive;font-size:52px;color:#7E866B;margin:4px 0 6px;"></h3>
+    <p id="dank-tekst" style="font-size:18.5px;line-height:1.7;color:#5f5645;margin:0 0 22px;"></p>
+    <div style="display:inline-block;text-align:left;background:#F7F1E5;border:1px solid rgba(166,148,114,0.35);border-radius:12px;padding:20px 26px;margin-bottom:24px;">
+      <p style="font-size:16px;color:#6B5F4B;margin:0 0 6px;"><span style="text-transform:uppercase;letter-spacing:0.14em;font-size:12px;color:#8a7d63;">Naam</span> &middot; <span id="dank-naam"></span></p>
+      <p style="font-size:16px;color:#6B5F4B;margin:0;"><span style="text-transform:uppercase;letter-spacing:0.14em;font-size:12px;color:#8a7d63;">Status</span> &middot; <span id="dank-status"></span></p>
+    </div>
+    <div>
+      <button type="button" onclick="editRSVP()" style="font-family:'EB Garamond',serif;text-transform:uppercase;letter-spacing:0.2em;font-size:12.5px;color:#4A4234;background:none;border:1.5px solid #a6906a;padding:12px 26px;border-radius:100px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a6906a';this.style.color='#FCF8F0'" onmouseout="this.style.background='';this.style.color='#4A4234'">Antwoord aanpassen</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section style="padding:96px 24px 110px;background:#EFE6D6;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:44px;">
+      <p style="text-transform:uppercase;letter-spacing:0.34em;font-size:13px;color:#8a7d63;margin:0 0 10px;">Vragen</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4.6vw,50px);color:#4A4234;margin:0;">Veelgestelde vragen</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(0)">
+          <span>Mag ik mijn kinderen meenemen?</span>
+          <span id="faq-teken-0" style="font-family:'EB Garamond',serif;font-size:26px;color:#7E866B;line-height:1;flex-shrink:0;">+</span>
+        </button>
+        <div class="faq-answer" id="faq-0">
+          <p>Zeker — er zijn ook kinderen van de partij. Geef bij je RSVP het aantal personen door, dan houden we daar rekening mee.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(1)">
+          <span>Ben ik dag- of avondgast?</span>
+          <span id="faq-teken-1" style="font-family:'EB Garamond',serif;font-size:26px;color:#7E866B;line-height:1;flex-shrink:0;">+</span>
+        </button>
+        <div class="faq-answer" id="faq-1">
+          <p>In je uitnodiging staat of je bij de ceremonie en het diner bent (vanaf 14:30) of bij het avondfeest (vanaf 20:00). Twijfel je? Stuur ons gerust een bericht.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(2)">
+          <span>Hoe kom ik bij On The Rock?</span>
+          <span id="faq-teken-2" style="font-family:'EB Garamond',serif;font-size:26px;color:#7E866B;line-height:1;flex-shrink:0;">+</span>
+        </button>
+        <div class="faq-answer" id="faq-2">
+          <p>On The Rock ligt aan het water in Aalsmeer. Het adres en de routebeschrijving sturen we mee met je bevestiging; er is parkeergelegenheid in de buurt.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(3)">
+          <span>Tot wanneer kan ik reageren?</span>
+          <span id="faq-teken-3" style="font-family:'EB Garamond',serif;font-size:26px;color:#7E866B;line-height:1;flex-shrink:0;">+</span>
+        </button>
+        <div class="faq-answer" id="faq-3">
+          <p>We horen het graag v&oacute;&oacute;r 1 mei 2027, zodat we alles op tijd kunnen regelen voor een onvergetelijke dag.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer style="padding:80px 24px 70px;text-align:center;background:#4A4234;color:#EDE3D1;">
+  <svg viewBox="0 0 360 48" width="240" height="34" style="margin:0 auto 22px;opacity:0.7;display:block;" fill="none">
+    <g stroke="#cdbf9f" stroke-width="1.1" stroke-linecap="round"><path d="M40 24 H150"/><path d="M210 24 H320"/></g>
+    <g stroke="#b6c0a0" stroke-width="1.1" fill="none"><ellipse cx="180" cy="24" rx="6" ry="13"/><ellipse cx="180" cy="24" rx="13" ry="6"/></g>
+    <circle cx="180" cy="24" r="3.2" fill="#c79f63"/>
+  </svg>
+  <h2 style="font-family:'Pinyon Script',cursive;font-weight:400;font-size:clamp(46px,8vw,72px);color:#FCF8F0;margin:0 0 6px;">Thomas &amp; Kim</h2>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0.08em;color:#cdbf9f;margin:0 0 4px;">Vrijdag 30 juli 2027 &middot; 14:30 &ndash; 01:00</p>
+  <p style="font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:#97896c;margin:0 0 20px;">On The Rock &middot; Aalsmeer</p>
+  <a href="https://thomasenkim.nl" style="font-family:'EB Garamond',serif;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#cdbf9f;text-decoration:none;border-bottom:1px solid rgba(205,191,159,0.5);padding-bottom:2px;">thomasenkim.nl</a>
+</footer>
+
+<script>
+  // --- State ---
+  let attendance = '';
+  const pills = { ceremonie: true, diner: true, feest: true };
+  let faqOpen = -1;
+
+  // --- RSVP: Attendance ---
+  function setAtt(val) {
+    attendance = val;
+    document.getElementById('btn-ja').classList.toggle('active', val === 'ja');
+    document.getElementById('btn-nee').classList.toggle('active', val === 'nee');
+    document.getElementById('ja-velden').style.display = val === 'ja' ? 'block' : 'none';
+    if (val === 'ja') document.getElementById('ja-velden').style.animation = 'tkfade .4s ease';
+    clearErr('err-att');
+  }
+
+  // --- RSVP: Pills ---
+  function togglePill(key) {
+    pills[key] = !pills[key];
+    document.getElementById('pill-' + key).classList.toggle('active', pills[key]);
+  }
+
+  // --- RSVP: Validation ---
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+  function clearErr(id) {
+    document.getElementById(id).classList.remove('visible');
+  }
+
+  // --- RSVP: Submit ---
+  document.getElementById('rsvp-form').addEventListener('submit', function(ev) {
+    ev.preventDefault();
+    let valid = true;
+
+    const naam = document.getElementById('f-naam').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+
+    if (!naam) { showErr('err-naam', 'Vul je naam in zodat we weten wie er komt.'); valid = false; }
+    else clearErr('err-naam');
+
+    if (!email) { showErr('err-email', 'Vul je e-mailadres in.'); valid = false; }
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showErr('err-email', 'Dit e-mailadres lijkt niet te kloppen.'); valid = false; }
+    else clearErr('err-email');
+
+    if (!attendance) { showErr('err-att', 'Laat ons weten of je erbij bent.'); valid = false; }
+    else clearErr('err-att');
+
+    if (!valid) return;
+
+    const data = {
+      naam, email, attendance,
+      personen: document.getElementById('f-personen').value,
+      ceremonie: pills.ceremonie, diner: pills.diner, feest: pills.feest,
+      dieet: document.getElementById('f-dieet').value,
+      lied: document.getElementById('f-lied').value,
+      bericht: document.getElementById('f-bericht').value
+    };
+    try { localStorage.setItem('tk_rsvp_2027', JSON.stringify(data)); } catch(e) {}
+
+    showBevestiging(data);
+  });
+
+  function showBevestiging(data) {
+    document.getElementById('rsvp-form').style.display = 'none';
+    const el = document.getElementById('rsvp-bevestiging');
+    el.style.display = 'block';
+
+    const isJa = data.attendance === 'ja';
+    document.getElementById('dank-titel').textContent = isJa ? 'Wat fijn!' : 'Bedankt';
+    document.getElementById('dank-tekst').textContent = isJa
+      ? 'Je RSVP is genoteerd. We kijken er enorm naar uit om dit moment met je te delen. Een bevestiging volgt per e-mail.'
+      : 'Jammer dat je er niet bij kunt zijn — bedankt dat je het laat weten. We denken aan je en proosten op je!';
+    document.getElementById('dank-naam').textContent = data.naam;
+    document.getElementById('dank-status').textContent = isJa
+      ? 'Aanwezig, ' + data.personen + (data.personen === '1' ? ' persoon' : ' personen')
+      : 'Helaas niet aanwezig';
+  }
+
+  function editRSVP() {
+    document.getElementById('rsvp-form').style.display = 'block';
+    document.getElementById('rsvp-bevestiging').style.display = 'none';
+  }
+
+  // --- FAQ accordion ---
+  function toggleFaq(i) {
+    faqOpen = faqOpen === i ? -1 : i;
+    for (let j = 0; j < 4; j++) {
+      const ans = document.getElementById('faq-' + j);
+      const tek = document.getElementById('faq-teken-' + j);
+      const open = faqOpen === j;
+      ans.classList.toggle('open', open);
+      tek.textContent = open ? '–' : '+';
+    }
+  }
+
+  // --- Restore saved RSVP ---
+  try {
+    const saved = JSON.parse(localStorage.getItem('tk_rsvp_2027') || 'null');
+    if (saved && saved.naam) {
+      document.getElementById('f-naam').value = saved.naam;
+      document.getElementById('f-email').value = saved.email;
+      if (saved.personen) document.getElementById('f-personen').value = saved.personen;
+      if (saved.dieet) document.getElementById('f-dieet').value = saved.dieet;
+      if (saved.lied) document.getElementById('f-lied').value = saved.lied;
+      if (saved.bericht) document.getElementById('f-bericht').value = saved.bericht;
+      showBevestiging(saved);
+    }
+  } catch(e) {}
+</script>
+</body>
+</html>
