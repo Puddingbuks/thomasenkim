@@ -322,11 +322,11 @@
       </div>
       <div>
         <label class="plus-one-row">
-          <input type="checkbox" id="plusOneCheck" onchange="togglePlusOne()">
+          <input type="checkbox" id="plusOneCheckYes" onchange="togglePlusOne('yes')">
           Ik neem een partner mee
         </label>
-        <div class="plus-one-field" id="plusOneField">
-          <input type="text" id="plusOneName" placeholder="Naam partner">
+        <div class="plus-one-field" id="plusOneFieldYes">
+          <input type="text" id="plusOneNameYes" placeholder="Naam partner">
         </div>
         <div class="field-note">Kinderen zijn helaas niet aanwezig bij dit feest &mdash; alleen op persoonlijke uitnodiging.</div>
       </div>
@@ -346,6 +346,16 @@
       <div>
         <label>E-mailadres (zodat we contact kunnen opnemen)</label>
         <input type="email" id="emailMaybe" placeholder="jouw@email.nl" autocomplete="email">
+      </div>
+      <div>
+        <label class="plus-one-row">
+          <input type="checkbox" id="plusOneCheckMaybe" onchange="togglePlusOne('maybe')">
+          Ik neem mogelijk een partner mee
+        </label>
+        <div class="plus-one-field" id="plusOneFieldMaybe">
+          <input type="text" id="plusOneNameMaybe" placeholder="Naam partner">
+        </div>
+        <div class="field-note">Kinderen zijn helaas niet aanwezig bij dit feest &mdash; alleen op persoonlijke uitnodiging.</div>
       </div>
       <div>
         <label>Wanneer weet je het wel? (optioneel)</label>
@@ -393,16 +403,17 @@
     }, 60);
   }
 
-  function togglePlusOne() {
-    const on = document.getElementById('plusOneCheck').checked;
-    document.getElementById('plusOneField').classList.toggle('visible', on);
+  function togglePlusOne(type) {
+    const on = document.getElementById('plusOneCheck' + cap(type)).checked;
+    document.getElementById('plusOneField' + cap(type)).classList.toggle('visible', on);
   }
 
   function submitRsvp(type) {
     const name = val('name' + cap(type));
     const email = val('email' + cap(type));
-    const plusOne = type === 'yes' && document.getElementById('plusOneCheck').checked;
-    const plusOneName = plusOne ? val('plusOneName') : null;
+    const plusOneEl = document.getElementById('plusOneCheck' + cap(type));
+    const plusOne = !!plusOneEl && plusOneEl.checked;
+    const plusOneName = plusOne ? val('plusOneName' + cap(type)) : null;
     const message = val('msg' + cap(type));
 
     if (!name) {
@@ -436,7 +447,12 @@
         t += ' We sturen je binnenkort meer info.';
         return t;
       },
-      maybe: () => `<strong>Geen probleem${name ? ', ' + name.split(' ')[0] : ''}!</strong>We houden een plekje vrij en nemen later contact op.`,
+      maybe: () => {
+        let t = `<strong>Geen probleem${name ? ', ' + name.split(' ')[0] : ''}!</strong>We houden een plekje vrij en nemen later contact op.`;
+        if (plusOne && plusOneName) t += ` We houden ook rekening met ${plusOneName}.`;
+        else if (plusOne) t += ' We houden ook rekening met een eventuele partner.';
+        return t;
+      },
       no: () => `<strong>Jammer dat je er niet bij kunt zijn${name ? ', ' + name.split(' ')[0] : ''}.</strong>Bedankt voor je reactie — we denken aan je op die dag! 💛`
     };
 
