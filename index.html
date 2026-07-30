@@ -33,7 +33,7 @@
   /* Photo */
   .photo-frame {
     position: relative;
-    height: 660px;
+    height: 760px;
     overflow: hidden;
     background: #d8d3cc;
   }
@@ -182,6 +182,10 @@
     font-size: 14px; line-height: 1.5; color: #a1978c; margin: 14px 0 0; font-style: italic;
   }
 
+  .guest-names { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+  .guest-name-row { display: none; }
+  .guest-name-row.visible { display: block; }
+
   .submit-btn {
     width: 100%; margin-top: 30px; padding: 17px 0;
     border: none; background: #14120f; color: #fbf9f6;
@@ -222,7 +226,7 @@
   @media (max-width: 420px) {
     .word-save, .word-date { font-size: 56px; }
     .word-the { font-size: 48px; }
-    .photo-frame { height: 560px; }
+    .photo-frame { height: 650px; }
   }
 </style>
 </head>
@@ -295,6 +299,29 @@
             <div class="guests-word" id="guestsWord">inclusief mijzelf</div>
           </div>
           <p class="guests-note">Kinderen zijn alleen op persoonlijke uitnodiging aanwezig.</p>
+
+          <div class="guest-names" id="guestNames">
+            <label class="guest-name-row" data-guest-idx="2">
+              <span class="field-label">Naam gast 2</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="3">
+              <span class="field-label">Naam gast 3</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="4">
+              <span class="field-label">Naam gast 4</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="5">
+              <span class="field-label">Naam gast 5</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="6">
+              <span class="field-label">Naam gast 6</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+          </div>
         </div>
 
         <label>
@@ -347,6 +374,10 @@
   function renderGuests() {
     document.getElementById('guestsCount').textContent = state.guests;
     document.getElementById('guestsWord').textContent = state.guests === 1 ? 'alleen ik' : 'inclusief mijzelf';
+    document.querySelectorAll('.guest-name-row').forEach(row => {
+      const idx = parseInt(row.dataset.guestIdx, 10);
+      row.classList.toggle('visible', idx <= state.guests);
+    });
   }
 
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -415,6 +446,7 @@
     document.getElementById('icsLink').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
   }
   buildIcsHref();
+  renderGuests();
 
   window.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('tkRsvp');
