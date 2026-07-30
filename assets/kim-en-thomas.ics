@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Kim & Thomas//Bruiloft//NL
+BEGIN:VEVENT
+UID:thomasenkim-bruiloft-2027@thomasenkim.nl
+DTSTAMP:20260730T000000Z
+DTSTART:20270730T123000Z
+DTEND:20270730T230000Z
+SUMMARY:Bruiloft Kim & Thomas
+LOCATION:On The Rock\, Aalsmeer
+DESCRIPTION:Save the date! De officiele uitnodiging volgt.
+END:VEVENT
+END:VCALENDAR

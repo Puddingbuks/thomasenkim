@@ -275,7 +275,6 @@
       </div>
 
       <div class="photo-loc">On The Rock &middot; Aalsmeer</div>
-      <div class="photo-time">14:30 &ndash; 01:00</div>
     </div>
   </div>
 
@@ -378,7 +377,7 @@
       <button type="button" class="reset-btn" onclick="resetRsvp()">Antwoord aanpassen</button>
     </div>
 
-    <a href="#" download="kim-en-thomas.ics" class="ics-link" id="icsLink">Zet de datum in mijn agenda</a>
+    <a href="assets/kim-en-thomas.ics" download="kim-en-thomas.ics" class="ics-link" id="icsLink">Zet de datum in mijn agenda</a>
 
     <div class="site-footer">thomasenkim.nl</div>
   </div>
@@ -483,19 +482,6 @@
     document.getElementById('thanksView').classList.remove('visible');
   }
 
-  function buildIcsHref() {
-    const ics = [
-      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kim & Thomas//Bruiloft//NL','BEGIN:VEVENT',
-      'UID:thomasenkim-bruiloft-2027@thomasenkim.nl',
-      'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
-      'DTSTART:20270730T123000Z','DTEND:20270730T230000Z','SUMMARY:Bruiloft Kim & Thomas',
-      'LOCATION:On The Rock\\, Aalsmeer',
-      'DESCRIPTION:Save the date! De officiele uitnodiging volgt.',
-      'END:VEVENT','END:VCALENDAR'
-    ].join('\r\n');
-    document.getElementById('icsLink').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-  }
-  buildIcsHref();
   renderGuests();
 
   window.addEventListener('DOMContentLoaded', () => {
