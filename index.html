@@ -478,7 +478,7 @@
         else if (plusOne) t += ' We houden ook rekening met een eventuele partner.';
         return t;
       },
-      no: () => `<strong>Jammer dat je er niet bij kunt zijn${name ? ', ' + name.split(' ')[0] : ''}.</strong>Bedankt voor je reactie — we denken aan je op die dag! 💛`
+      no: () => `<strong>Jammer dat je er niet bij kunt zijn${name ? ', ' + name.split(' ')[0] : ''}.</strong>Bedankt voor je reactie. We denken aan je op die dag! 💛`
     };
 
     conf.innerHTML = msgs[type]();
