@@ -395,12 +395,22 @@
       return;
     }
 
-    const plusOne = (choice === 'yes' || choice === 'maybe') && state.guests > 1;
+    const showGuests = choice === 'yes' || choice === 'maybe';
+    const guests = showGuests ? state.guests : 1;
+    const plusOne = showGuests && guests > 1;
+
+    const guestNames = [];
+    if (showGuests) {
+      document.querySelectorAll('.guest-name-row.visible .guest-name-input').forEach(input => {
+        const v = input.value.trim();
+        if (v) guestNames.push(v);
+      });
+    }
 
     const data = {
       type: choice, name, email, message,
-      plusOne, plusOneName: null,
-      guests: (choice === 'yes' || choice === 'maybe') ? state.guests : 1,
+      plusOne, plusOneName: guestNames[0] || null,
+      guests, guestNames,
       timestamp: new Date().toISOString()
     };
 
