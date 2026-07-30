@@ -150,14 +150,16 @@
   }
   .field-input {
     width: 100%; box-sizing: border-box;
-    border: none; border-bottom: 1px solid #ded7cd;
-    background: transparent;
-    padding: 6px 0 9px;
+    border: 1px solid #ded7cd;
+    border-radius: 6px;
+    background: #f3efe8;
+    padding: 12px 14px;
     font-size: 18px; color: #14120f;
     outline: none;
     font-family: 'Cormorant Garamond', serif;
+    transition: border-color .15s ease, background .15s ease;
   }
-  .field-input:focus { border-bottom-color: #14120f; }
+  .field-input:focus { border-color: #14120f; background: #fbf9f6; }
   textarea.field-input { resize: none; }
 
   .guests-block { display: none; }
