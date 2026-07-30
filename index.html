@@ -262,6 +262,26 @@
     margin-bottom: 0.4rem;
   }
 
+  /* Agenda */
+  .calendar-cta { display: none; margin-top: 1rem; }
+  .calendar-cta.visible { display: block; }
+
+  .btn-calendar {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    border: 1.5px solid var(--gold);
+    background: transparent;
+    color: var(--brown);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+  }
+  .btn-calendar:hover { background: var(--gold); color: #fff; }
+
   @media (max-width: 400px) {
     .card { padding: 2rem 1.25rem; }
     .names { font-size: 2.8rem; }
@@ -379,6 +399,10 @@
     </div>
 
     <div class="confirmation" id="confirmation"></div>
+
+    <div class="calendar-cta" id="calendarCta">
+      <button class="btn-calendar" onclick="downloadIcs()">📅 Zet de datum in mijn agenda</button>
+    </div>
   </div>
 
 </div>
@@ -459,7 +483,36 @@
 
     conf.innerHTML = msgs[type]();
     conf.classList.add('visible');
+    document.getElementById('calendarCta').classList.toggle('visible', type === 'yes' || type === 'maybe');
     conf.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function downloadIcs() {
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Thomas & Kim//Bruiloft//NL',
+      'BEGIN:VEVENT',
+      'UID:thomasenkim-bruiloft-2027@thomasenkim.nl',
+      'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
+      'DTSTART:20270730T123000Z',
+      'DTEND:20270730T230000Z',
+      'SUMMARY:Bruiloft Thomas & Kim',
+      'LOCATION:On The Rock\\, Aalsmeer',
+      'DESCRIPTION:Wij gaan trouwen! Vrijdag 30 juli 2027\\, On The Rock in Aalsmeer.',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'thomas-en-kim-bruiloft.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -475,6 +528,7 @@
       document.getElementById('confirmation').innerHTML =
         `<strong>Je hebt al gereageerd</strong>Jouw keuze: ${label}. Bedankt!`;
       document.getElementById('confirmation').classList.add('visible');
+      document.getElementById('calendarCta').classList.toggle('visible', d.type === 'yes' || d.type === 'maybe');
       document.querySelectorAll('.btn').forEach(b => b.disabled = true);
     } catch(e) {}
   });
