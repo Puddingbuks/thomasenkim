@@ -188,6 +188,12 @@
   .guest-name-row { display: none; }
   .guest-name-row.visible { display: block; }
 
+  .guests-max-note {
+    display: none;
+    font-size: 14px; line-height: 1.5; color: #a1978c; margin: 14px 0 0; font-style: italic;
+  }
+  .guests-max-note.visible { display: block; }
+
   .submit-btn {
     width: 100%; margin-top: 30px; padding: 17px 0;
     border: none; background: #14120f; color: #fbf9f6;
@@ -323,7 +329,24 @@
               <span class="field-label">Naam gast 6</span>
               <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
             </label>
+            <label class="guest-name-row" data-guest-idx="7">
+              <span class="field-label">Naam gast 7</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="8">
+              <span class="field-label">Naam gast 8</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="9">
+              <span class="field-label">Naam gast 9</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
+            <label class="guest-name-row" data-guest-idx="10">
+              <span class="field-label">Naam gast 10</span>
+              <input type="text" class="field-input guest-name-input" placeholder="Voor- en achternaam">
+            </label>
           </div>
+          <p class="guests-max-note" id="guestsMaxNote">Rustig aan lieve gast!! Wil je meer dan 10 mensen meenemen, neem dan even contact met ons op.</p>
         </div>
 
         <label>
@@ -366,7 +389,7 @@
   }
 
   function incGuests() {
-    state.guests = Math.min(6, state.guests + 1);
+    state.guests = Math.min(10, state.guests + 1);
     renderGuests();
   }
   function decGuests() {
@@ -380,6 +403,7 @@
       const idx = parseInt(row.dataset.guestIdx, 10);
       row.classList.toggle('visible', idx <= state.guests);
     });
+    document.getElementById('guestsMaxNote').classList.toggle('visible', state.guests >= 10);
   }
 
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
