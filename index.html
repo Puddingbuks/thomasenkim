@@ -7,460 +7,372 @@
 <title>Save the Date · Kim & Thomas · 30 juli 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --cream: #F7F1E5;
-    --light: #FCF8F0;
-    --brown: #4A4234;
-    --sage: #7E866B;
-    --gold: #b08a52;
-    --muted: #8a7d63;
-  }
-
   html, body {
-    min-height: 100%;
-    background: var(--cream);
-    color: var(--brown);
+    background: #fbf9f6;
+    color: #14120f;
     font-family: 'Cormorant Garamond', Georgia, serif;
   }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100svh;
-    padding: 2rem 1.5rem;
-  }
+  body { display: flex; justify-content: center; }
 
-  .card {
+  a { color: #14120f; text-decoration: underline; text-underline-offset: 3px; }
+  input::placeholder, textarea::placeholder { color: #b4aca3; }
+  ::selection { background: #14120f; color: #fff; }
+
+  .page {
     width: 100%;
     max-width: 480px;
-    background: var(--light);
-    border: 1px solid rgba(176,138,82,0.2);
-    border-radius: 4px;
-    padding: 3rem 2.5rem 2.5rem;
+    background: #fbf9f6;
+    min-height: 100vh;
+  }
+
+  /* Photo */
+  .photo-frame {
+    position: relative;
+    height: 660px;
+    overflow: hidden;
+    background: #d8d3cc;
+  }
+  .photo-frame img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 28%;
+    filter: grayscale(1) contrast(1.06) brightness(1.02);
+  }
+  .photo-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(251,249,246,0) 34%, rgba(251,249,246,0.72) 56%, #fbf9f6 74%);
+  }
+  .photo-text {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 0 26px 26px;
     text-align: center;
-    box-shadow: 0 2px 24px rgba(74,66,52,0.07);
+    color: #14120f;
+  }
+  .word-save, .word-date {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 68px;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+  }
+  .word-date { line-height: 0.9; }
+  .word-the {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 60px;
+    line-height: 0.8;
+    margin: -6px 0 -10px;
+  }
+  .photo-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    margin: 18px 0 6px;
+    color: #3a352f;
+  }
+  .photo-names {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+    letter-spacing: 0.07em;
+    margin-top: 10px;
+  }
+  .photo-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; margin: 14px 0 4px;
+  }
+  .photo-divider .line { height: 1px; width: 46px; background: #b9b0a6; }
+  .photo-divider .mark { font-size: 11px; color: #8d8378; letter-spacing: 0.3em; }
+  .photo-loc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #4a443d;
+  }
+  .photo-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; letter-spacing: 0.22em; color: #8d8378; margin-top: 5px;
   }
 
-  .save-the-date-badge {
-    display: inline-block;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-size: 0.68rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding: 0.35rem 1rem;
-    margin-bottom: 1.8rem;
-    border-radius: 2px;
+  /* Save the date intro */
+  .intro { padding: 4px 30px 0; text-align: center; }
+  .intro-script {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 30px; color: #6c625a; line-height: 1.2;
+  }
+  .intro-text {
+    font-size: 17px; line-height: 1.62; color: #524c45; margin: 14px 0 0;
   }
 
-  .eyebrow {
-    font-size: 0.72rem;
+  /* RSVP divider */
+  .rsvp-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 30px 0 26px;
+  }
+  .rsvp-divider .line { height: 1px; width: 60px; background: #ded7cd; }
+  .rsvp-divider .label {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px; letter-spacing: 0.34em; color: #a1978c;
+  }
+
+  .rsvp-body { padding: 0 26px 46px; }
+
+  .rsvp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px; text-align: center; color: #14120f; letter-spacing: 0.01em;
+  }
+
+  .choice-row { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+  .choice-btn {
+    width: 100%;
+    padding: 16px 0;
+    border: 1px solid #ded7cd;
+    background: transparent;
+    color: #524c45;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all .18s ease;
   }
+  .choice-btn:hover { border-color: #14120f; }
+  .choice-btn.active { border-color: #14120f; background: #14120f; color: #fbf9f6; }
 
-  .names {
-    font-family: 'Pinyon Script', cursive;
-    font-size: clamp(3rem, 12vw, 4rem);
-    color: var(--brown);
-    line-height: 1.1;
-  }
-
-  .divider {
-    margin: 1.2rem auto;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    justify-content: center;
-    color: var(--gold);
-    opacity: 0.7;
-  }
-  .divider::before, .divider::after {
-    content: '';
+  .field-group { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+  .field-label {
     display: block;
-    width: 3rem;
-    height: 1px;
-    background: var(--gold);
-    opacity: 0.5;
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #a1978c;
+    margin-bottom: 7px;
   }
-
-  .date-block {
-    line-height: 1.5;
-  }
-  .date-block .day {
-    font-size: 1.5rem;
-    font-weight: 300;
-  }
-  .date-block .detail {
-    font-size: 0.78rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.3rem;
-  }
-
-  .sprig-row {
-    display: flex;
-    justify-content: center;
-    margin: 1.4rem 0 0;
-    opacity: 0.75;
-  }
-  .sprig-row svg { width: 140px; height: auto; }
-
-  /* RSVP */
-  .rsvp-section {
-    margin-top: 2rem;
-    border-top: 1px solid rgba(176,138,82,0.2);
-    padding-top: 2rem;
-  }
-
-  .rsvp-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1.2rem;
-  }
-
-  .rsvp-intro-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--brown);
-    margin-bottom: 0.6rem;
-  }
-  .rsvp-intro-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--muted);
-    margin-bottom: 1.6rem;
-  }
-
-  .rsvp-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 0.85rem 1.5rem;
-    border: 1.5px solid;
+  .field-input {
+    width: 100%; box-sizing: border-box;
+    border: none; border-bottom: 1px solid #ded7cd;
     background: transparent;
-    color: var(--brown);
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background 0.18s, color 0.18s;
-  }
-  .btn.yes  { border-color: var(--sage); }
-  .btn.no   { border-color: var(--muted); }
-  .btn.maybe { border-color: var(--muted); }
-
-  .btn:hover        { opacity: 0.85; }
-  .btn.selected-yes   { background: var(--sage);  color: #fff; border-color: var(--sage); }
-  .btn.selected-no    { background: var(--brown); color: var(--cream); border-color: var(--brown); }
-  .btn.selected-maybe { background: var(--muted); color: #fff; border-color: var(--muted); }
-  .btn:disabled { opacity: 0.5; cursor: default; }
-
-  /* Form */
-  .form-area {
-    margin-top: 1.5rem;
-    display: none;
-    flex-direction: column;
-    gap: 0.85rem;
-    text-align: left;
-  }
-  .form-area.visible { display: flex; }
-
-  .form-area label {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 0.3rem;
-  }
-
-  .form-area input,
-  .form-area textarea {
-    width: 100%;
-    padding: 0.65rem 0.85rem;
-    border: 1px solid rgba(74,66,52,0.2);
-    background: var(--cream);
-    color: var(--brown);
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1rem;
-    border-radius: 3px;
+    padding: 6px 0 9px;
+    font-size: 18px; color: #14120f;
     outline: none;
-    transition: border-color 0.15s;
+    font-family: 'Cormorant Garamond', serif;
   }
-  .form-area input:focus,
-  .form-area textarea:focus { border-color: var(--sage); }
-  .form-area textarea { resize: vertical; min-height: 76px; }
+  .field-input:focus { border-bottom-color: #14120f; }
+  textarea.field-input { resize: none; }
 
-  .plus-one-row {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 0.95rem;
-    color: var(--brown);
-    cursor: pointer;
-    user-select: none;
+  .guests-block { display: none; }
+  .guests-block.visible { display: block; }
+  .guests-label {
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #a1978c;
+    margin-bottom: 12px;
   }
-  .plus-one-row input[type="checkbox"] {
-    width: 1rem;
-    height: 1rem;
-    accent-color: var(--sage);
-    cursor: pointer;
-    flex-shrink: 0;
+  .guests-row { display: flex; align-items: center; gap: 18px; }
+  .stepper-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid #ded7cd; background: transparent;
+    font-size: 20px; color: #524c45; cursor: pointer; line-height: 1;
   }
-
-  .plus-one-field { display: none; margin-top: 0.5rem; }
-  .plus-one-field.visible { display: block; }
-
-  .field-note {
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-style: italic;
-    line-height: 1.5;
-    margin-top: 0.2rem;
+  .stepper-btn:hover { border-color: #14120f; }
+  .guests-count {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: #14120f; min-width: 24px; text-align: center;
+  }
+  .guests-word { font-size: 15px; color: #8d8378; font-style: italic; }
+  .guests-note {
+    font-size: 14px; line-height: 1.5; color: #a1978c; margin: 14px 0 0; font-style: italic;
   }
 
   .submit-btn {
-    width: 100%;
-    padding: 0.9rem;
-    background: var(--sage);
-    color: #fff;
-    border: none;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border-radius: 3px;
+    width: 100%; margin-top: 30px; padding: 17px 0;
+    border: none; background: #14120f; color: #fbf9f6;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.18s;
-    margin-top: 0.25rem;
   }
-  .submit-btn:hover { background: var(--brown); }
-  .submit-btn.dark  { background: var(--brown); }
-  .submit-btn.dark:hover { background: #2e2820; }
+  .submit-btn:hover { background: #3a352f; }
 
-  /* Confirmation */
-  .confirmation {
-    display: none;
-    margin-top: 1.5rem;
-    padding: 1.2rem 1rem;
-    background: rgba(126,134,107,0.1);
-    border-radius: 3px;
-    font-size: 1rem;
-    color: var(--brown);
-    line-height: 1.6;
+  .thanks-view { display: none; text-align: center; padding: 10px 0 4px; }
+  .thanks-view.visible { display: block; }
+  .thanks-script {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 44px; color: #14120f; line-height: 1.1;
   }
-  .confirmation.visible { display: block; }
-  .confirmation strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 0.4rem;
+  .thanks-body { font-size: 17px; line-height: 1.62; color: #524c45; margin: 16px 0 0; }
+  .reset-btn {
+    margin-top: 26px; border: none; background: transparent;
+    font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #a1978c;
+    cursor: pointer; padding: 6px 0; border-bottom: 1px solid #ded7cd;
+  }
+  .reset-btn:hover { color: #14120f; }
+
+  .form-view.hidden { display: none; }
+
+  .ics-link {
+    display: block; margin-top: 34px; text-align: center;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #8d8378;
+    text-decoration: none; border-top: 1px solid #ede8e1; padding-top: 26px;
+  }
+  .ics-link:hover { color: #14120f; }
+
+  .site-footer {
+    text-align: center; margin-top: 30px;
+    font-family: 'Pinyon Script', cursive; font-size: 22px; color: #c3bab0;
   }
 
-  /* Agenda */
-  .calendar-cta { display: none; margin-top: 1rem; }
-  .calendar-cta.visible { display: block; }
-
-  .btn-calendar {
-    width: 100%;
-    padding: 0.85rem 1.5rem;
-    border: 1.5px solid var(--gold);
-    background: transparent;
-    color: var(--brown);
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background 0.18s, color 0.18s;
-  }
-  .btn-calendar:hover { background: var(--gold); color: #fff; }
-
-  @media (max-width: 400px) {
-    .card { padding: 2rem 1.25rem; }
-    .names { font-size: 2.8rem; }
+  @media (max-width: 420px) {
+    .word-save, .word-date { font-size: 56px; }
+    .word-the { font-size: 48px; }
+    .photo-frame { height: 560px; }
   }
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="page">
 
-  <div class="save-the-date-badge">Save the Date</div>
+  <div class="photo-frame">
+    <img src="assets/kim-thomas.png" alt="Kim en Thomas" onerror="this.style.display='none'">
+    <div class="photo-gradient"></div>
+    <div class="photo-text">
+      <div class="word-save">SAVE</div>
+      <div class="word-the">the</div>
+      <div class="word-date">DATE</div>
 
-  <div class="eyebrow">Wij gaan trouwen</div>
+      <div class="photo-sub">wij gaan trouwen<br>op vrijdag 30 juli 2027</div>
 
-  <div class="names">Kim &amp; Thomas</div>
+      <div class="photo-names">KIM &amp; THOMAS</div>
 
-  <div class="divider">✦</div>
+      <div class="photo-divider">
+        <div class="line"></div>
+        <div class="mark">✦</div>
+        <div class="line"></div>
+      </div>
 
-  <div class="date-block">
-    <div class="day">Vrijdag 30 juli 2027</div>
-    <div class="detail">On The Rock &middot; Aalsmeer &middot; 14:30 &ndash; 01:00</div>
+      <div class="photo-loc">On The Rock &middot; Aalsmeer</div>
+      <div class="photo-time">14:30 &ndash; 01:00</div>
+    </div>
   </div>
 
-  <div class="sprig-row">
-    <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 22 C 28 6, 52 6, 66 20 C 73 27, 63 33, 58 27 C 55 23, 59 19, 65 21"
-            stroke="#b08a52" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-      <ellipse cx="96" cy="46" rx="32" ry="30" stroke="#b08a52" stroke-width="1.3" transform="rotate(-6 96 46)"/>
-      <ellipse cx="96" cy="46" rx="25" ry="23" stroke="#b08a52" stroke-width="1.1" transform="rotate(-6 96 46)"/>
-      <ellipse cx="142" cy="43" rx="32" ry="30" stroke="#b08a52" stroke-width="1.3" transform="rotate(6 142 43)"/>
-      <ellipse cx="142" cy="43" rx="25" ry="23" stroke="#b08a52" stroke-width="1.1" transform="rotate(6 142 43)"/>
-      <path d="M168 58 C 176 65, 168 71, 174 65 C 178 61, 186 63, 190 69 C 196 77, 208 77, 216 71"
-            stroke="#b08a52" stroke-width="1.3" stroke-linecap="round" fill="none"/>
-    </svg>
+  <div class="intro">
+    <div class="intro-script">houd deze dag alvast vrij</div>
+    <p class="intro-text">De officiële uitnodiging met alle details volgt later. We vinden het fijn als je ons nu alvast laat weten of je erbij denkt te zijn.</p>
   </div>
 
-  <div class="rsvp-section">
-    <p class="rsvp-intro-title">Houd deze dag alvast vrij!</p>
-    <p class="rsvp-intro-text">De officiële uitnodiging met alle details volgt. We vinden het fijn als je ons alvast laat weten of je verwacht erbij te zijn.</p>
-    <div class="rsvp-label">Kun jij erbij zijn?</div>
+  <div class="rsvp-divider">
+    <div class="line"></div>
+    <div class="label">RSVP</div>
+    <div class="line"></div>
+  </div>
 
-    <div class="rsvp-buttons">
-      <button class="btn yes"   onclick="selectRsvp('yes')">Jazeker! 🥂</button>
-      <button class="btn maybe" onclick="selectRsvp('maybe')">Nog niet zeker</button>
-      <button class="btn no"    onclick="selectRsvp('no')">Nee, helaas niet</button>
-    </div>
+  <div class="rsvp-body">
 
-    <!-- Jazeker -->
-    <div class="form-area" id="formYes">
-      <div>
-        <label>Jouw naam</label>
-        <input type="text" id="nameYes" placeholder="Voor- en achternaam" autocomplete="name">
+    <div class="form-view" id="formView">
+      <div class="rsvp-title">Kun jij erbij zijn?</div>
+
+      <div class="choice-row">
+        <button type="button" class="choice-btn active" id="choiceYes" onclick="selectChoice('yes')">Jazeker! 🥂</button>
+        <button type="button" class="choice-btn" id="choiceMaybe" onclick="selectChoice('maybe')">Nog niet zeker</button>
+        <button type="button" class="choice-btn" id="choiceNo" onclick="selectChoice('no')">Nee, helaas niet</button>
       </div>
-      <div>
-        <label>E-mailadres</label>
-        <input type="email" id="emailYes" placeholder="jouw@email.nl" autocomplete="email">
-      </div>
-      <div>
-        <label class="plus-one-row">
-          <input type="checkbox" id="plusOneCheckYes" onchange="togglePlusOne('yes')">
-          Ik neem een partner mee
+
+      <div class="field-group">
+        <label>
+          <span class="field-label">Jouw naam</span>
+          <input type="text" id="nameInput" class="field-input" placeholder="Voor- en achternaam" autocomplete="name">
         </label>
-        <div class="plus-one-field" id="plusOneFieldYes">
-          <input type="text" id="plusOneNameYes" placeholder="Naam partner">
-        </div>
-        <div class="field-note">Kinderen zijn helaas niet aanwezig bij dit feest, alleen op persoonlijke uitnodiging.</div>
-      </div>
-      <div>
-        <label>Bericht (optioneel)</label>
-        <textarea id="msgYes" placeholder="Iets leuks kwijt?"></textarea>
-      </div>
-      <button class="submit-btn" onclick="submitRsvp('yes')">Aanmelden ✓</button>
-    </div>
 
-    <!-- Nog niet zeker -->
-    <div class="form-area" id="formMaybe">
-      <div>
-        <label>Jouw naam</label>
-        <input type="text" id="nameMaybe" placeholder="Voor- en achternaam" autocomplete="name">
-      </div>
-      <div>
-        <label>E-mailadres (zodat we contact kunnen opnemen)</label>
-        <input type="email" id="emailMaybe" placeholder="jouw@email.nl" autocomplete="email">
-      </div>
-      <div>
-        <label class="plus-one-row">
-          <input type="checkbox" id="plusOneCheckMaybe" onchange="togglePlusOne('maybe')">
-          Ik neem mogelijk een partner mee
+        <label>
+          <span class="field-label">E-mailadres</span>
+          <input type="email" id="emailInput" class="field-input" placeholder="naam@voorbeeld.nl" autocomplete="email">
         </label>
-        <div class="plus-one-field" id="plusOneFieldMaybe">
-          <input type="text" id="plusOneNameMaybe" placeholder="Naam partner">
+
+        <div class="guests-block visible" id="guestsBlock">
+          <div class="guests-label">Aantal personen</div>
+          <div class="guests-row">
+            <button type="button" class="stepper-btn" onclick="decGuests()">&minus;</button>
+            <div class="guests-count" id="guestsCount">2</div>
+            <button type="button" class="stepper-btn" onclick="incGuests()">+</button>
+            <div class="guests-word" id="guestsWord">inclusief mijzelf</div>
+          </div>
+          <p class="guests-note">Kinderen zijn alleen op persoonlijke uitnodiging aanwezig.</p>
         </div>
-        <div class="field-note">Kinderen zijn helaas niet aanwezig bij dit feest, alleen op persoonlijke uitnodiging.</div>
+
+        <label>
+          <span class="field-label" id="messageLabel">Bericht (optioneel)</span>
+          <textarea rows="3" id="messageInput" class="field-input" placeholder="Laat een berichtje achter&hellip;"></textarea>
+        </label>
       </div>
-      <div>
-        <label>Wanneer weet je het wel? (optioneel)</label>
-        <input type="text" id="msgMaybe" placeholder="bijv. na de zomer">
-      </div>
-      <button class="submit-btn" onclick="submitRsvp('maybe')">Versturen</button>
+
+      <button type="button" class="submit-btn" id="submitBtn" onclick="submitRsvp()">Aanmelden</button>
     </div>
 
-    <!-- Nee -->
-    <div class="form-area" id="formNo">
-      <div>
-        <label>Jouw naam</label>
-        <input type="text" id="nameNo" placeholder="Voor- en achternaam" autocomplete="name">
-      </div>
-      <div>
-        <label>Bericht (optioneel)</label>
-        <textarea id="msgNo" placeholder="We snappen het, maar vinden het jammer!"></textarea>
-      </div>
-      <button class="submit-btn dark" onclick="submitRsvp('no')">Versturen</button>
+    <div class="thanks-view" id="thanksView">
+      <div class="thanks-script" id="thanksScript">wat leuk!</div>
+      <p class="thanks-body" id="thanksBody">We hebben je aanmelding ontvangen. De officiële uitnodiging met alle details volgt later.</p>
+      <button type="button" class="reset-btn" onclick="resetRsvp()">Antwoord aanpassen</button>
     </div>
 
-    <div class="confirmation" id="confirmation"></div>
+    <a href="#" download="kim-en-thomas.ics" class="ics-link" id="icsLink">Zet de datum in mijn agenda</a>
 
-    <div class="calendar-cta" id="calendarCta">
-      <button class="btn-calendar" onclick="downloadIcs()">📅 Zet de datum in mijn agenda</button>
-    </div>
+    <div class="site-footer">thomasenkim.nl</div>
   </div>
 
 </div>
 
 <script>
-  function selectRsvp(choice) {
-    // Update button states
-    document.querySelectorAll('.btn').forEach(b => {
-      b.classList.remove('selected-yes', 'selected-no', 'selected-maybe');
-    });
-    document.querySelector('.btn.' + choice).classList.add('selected-' + choice);
+  const state = { choice: 'yes', guests: 2, sent: false };
 
-    // Show/hide forms
-    ['yes','maybe','no'].forEach(c => {
-      document.getElementById('form' + cap(c)).classList.toggle('visible', c === choice);
-    });
-    document.getElementById('confirmation').classList.remove('visible');
+  function selectChoice(choice) {
+    state.choice = choice;
+    document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('choice' + cap(choice)).classList.add('active');
 
-    // Scroll into view
-    setTimeout(() => {
-      document.getElementById('form' + cap(choice))
-        ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 60);
+    const showGuests = choice === 'yes' || choice === 'maybe';
+    document.getElementById('guestsBlock').classList.toggle('visible', showGuests);
+
+    document.getElementById('messageLabel').textContent =
+      choice === 'maybe' ? 'Wanneer weet je het wel? (optioneel)' : 'Bericht (optioneel)';
+
+    document.getElementById('submitBtn').textContent = choice === 'yes' ? 'Aanmelden' : 'Versturen';
   }
 
-  function togglePlusOne(type) {
-    const on = document.getElementById('plusOneCheck' + cap(type)).checked;
-    document.getElementById('plusOneField' + cap(type)).classList.toggle('visible', on);
+  function incGuests() {
+    state.guests = Math.min(6, state.guests + 1);
+    renderGuests();
+  }
+  function decGuests() {
+    state.guests = Math.max(1, state.guests - 1);
+    renderGuests();
+  }
+  function renderGuests() {
+    document.getElementById('guestsCount').textContent = state.guests;
+    document.getElementById('guestsWord').textContent = state.guests === 1 ? 'alleen ik' : 'inclusief mijzelf';
   }
 
-  function submitRsvp(type) {
-    const name = val('name' + cap(type));
-    const email = val('email' + cap(type));
-    const plusOneEl = document.getElementById('plusOneCheck' + cap(type));
-    const plusOne = !!plusOneEl && plusOneEl.checked;
-    const plusOneName = plusOne ? val('plusOneName' + cap(type)) : null;
-    const message = val('msg' + cap(type));
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function val(id) { return document.getElementById(id)?.value.trim() || ''; }
+
+  function submitRsvp() {
+    const name = val('nameInput');
+    const email = val('emailInput');
+    const message = val('messageInput');
+    const choice = state.choice;
 
     if (!name) {
       alert('Vul je naam in.');
-      document.getElementById('name' + cap(type)).focus();
+      document.getElementById('nameInput').focus();
       return;
     }
 
-    const data = { type, name, email, plusOne, plusOneName, message, timestamp: new Date().toISOString() };
+    const plusOne = (choice === 'yes' || choice === 'maybe') && state.guests > 1;
 
-    // Webhook (fire & forget)
+    const data = {
+      type: choice, name, email, message,
+      plusOne, plusOneName: null,
+      guests: (choice === 'yes' || choice === 'maybe') ? state.guests : 1,
+      timestamp: new Date().toISOString()
+    };
+
     fetch('https://n8n.rankengine.nl/webhook/thomasenkim-rsvp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -469,79 +381,48 @@
 
     localStorage.setItem('tkRsvp', JSON.stringify(data));
 
-    // Hide all forms and buttons
-    ['yes','maybe','no'].forEach(c =>
-      document.getElementById('form' + cap(c)).classList.remove('visible'));
-    document.querySelectorAll('.btn').forEach(b => b.disabled = true);
-
-    const conf = document.getElementById('confirmation');
-    const msgs = {
-      yes: () => {
-        let t = `<strong>Fantastisch${name ? ', ' + name.split(' ')[0] : ''}! 🥂</strong>We hebben je aanmelding ontvangen.`;
-        if (plusOne && plusOneName) t += ` ${plusOneName} is ook van harte welkom!`;
-        else if (plusOne) t += ' Je partner is ook van harte welkom!';
-        t += ' We sturen je binnenkort meer info.';
-        return t;
-      },
-      maybe: () => {
-        let t = `<strong>Geen probleem${name ? ', ' + name.split(' ')[0] : ''}!</strong>We houden een plekje vrij en nemen later contact op.`;
-        if (plusOne && plusOneName) t += ` We houden ook rekening met ${plusOneName}.`;
-        else if (plusOne) t += ' We houden ook rekening met een eventuele partner.';
-        return t;
-      },
-      no: () => `<strong>Jammer dat je er niet bij kunt zijn${name ? ', ' + name.split(' ')[0] : ''}.</strong>Bedankt voor je reactie. We denken aan je op die dag! 💛`
-    };
-
-    conf.innerHTML = msgs[type]();
-    conf.classList.add('visible');
-    document.getElementById('calendarCta').classList.toggle('visible', type === 'yes' || type === 'maybe');
-    conf.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showThanks(choice, name);
   }
 
-  function downloadIcs() {
+  function showThanks(choice, name) {
+    const scripts = { yes: 'wat leuk!', maybe: 'dankjewel', no: 'jammer!' };
+    const bodies = {
+      yes: 'We hebben je aanmelding ontvangen. De officiële uitnodiging met alle details volgt later.',
+      maybe: 'Geen probleem. Laat het ons weten zodra je het weet, we houden je op de hoogte.',
+      no: 'Bedankt voor het laten weten. We gaan je missen, maar drinken er een op je.'
+    };
+    document.getElementById('thanksScript').textContent = scripts[choice];
+    document.getElementById('thanksBody').textContent = bodies[choice];
+    document.getElementById('formView').classList.add('hidden');
+    document.getElementById('thanksView').classList.add('visible');
+  }
+
+  function resetRsvp() {
+    document.getElementById('formView').classList.remove('hidden');
+    document.getElementById('thanksView').classList.remove('visible');
+  }
+
+  function buildIcsHref() {
     const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Kim & Thomas//Bruiloft//NL',
-      'BEGIN:VEVENT',
+      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kim & Thomas//Bruiloft//NL','BEGIN:VEVENT',
       'UID:thomasenkim-bruiloft-2027@thomasenkim.nl',
       'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
-      'DTSTART:20270730T123000Z',
-      'DTEND:20270730T230000Z',
-      'SUMMARY:Bruiloft Kim & Thomas',
+      'DTSTART:20270730T123000Z','DTEND:20270730T230000Z','SUMMARY:Bruiloft Kim & Thomas',
       'LOCATION:On The Rock\\, Aalsmeer',
-      'DESCRIPTION:Wij gaan trouwen! Vrijdag 30 juli 2027\\, On The Rock in Aalsmeer.',
-      'END:VEVENT',
-      'END:VCALENDAR'
+      'DESCRIPTION:Save the date! De officiele uitnodiging volgt.',
+      'END:VEVENT','END:VCALENDAR'
     ].join('\r\n');
-
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'thomas-en-kim-bruiloft.ics';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    document.getElementById('icsLink').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
   }
+  buildIcsHref();
 
-  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-  function val(id) { return document.getElementById(id)?.value.trim() || ''; }
-
-  // Restore submitted state
   window.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('tkRsvp');
     if (!saved) return;
     try {
       const d = JSON.parse(saved);
-      const label = d.type === 'yes' ? 'Jazeker!' : d.type === 'maybe' ? 'Nog niet zeker' : 'Nee helaas';
-      document.getElementById('confirmation').innerHTML =
-        `<strong>Je hebt al gereageerd</strong>Jouw keuze: ${label}. Bedankt!`;
-      document.getElementById('confirmation').classList.add('visible');
-      document.getElementById('calendarCta').classList.toggle('visible', d.type === 'yes' || d.type === 'maybe');
-      document.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    } catch(e) {}
+      showThanks(d.type, d.name);
+    } catch (e) {}
   });
 </script>
 
